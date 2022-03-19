@@ -6,7 +6,7 @@
 #include <math.h>
 #include "baseentity.h"
 
-#define N_TRIANGLES 32
+#define N_TRIANGLES 15
 
 Circle::Circle( float radius ) : BaseEntity()
 {

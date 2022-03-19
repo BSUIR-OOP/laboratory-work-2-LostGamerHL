@@ -27,6 +27,7 @@ public:
 		acceleration = vector2D(0, 0);
 		normal = vector2D(0, 0);
 		angleVelocity = 0.f;
+		is_static = false;
 	}
 	
 	virtual ~BaseEntity() {};
@@ -38,8 +39,10 @@ public:
 	void setMass(float flMass);
 	void setVelocity(vector2D vecVelocity);
 	void setGravity(float flGravity);
+	void ApplyImpulse( vector2D vecImpulse );
 	
 	void setAngle(float flAngle);
+	void setStatic( bool flag );
 	
 	virtual int getShape() { return SHAPE_NONE; }
 
@@ -48,8 +51,10 @@ public:
 	vector2D origin, angle, velocity, acceleration, normal;
 	float inv_mass, mass, angleVelocity;
 	
-	float impulse, gravity;
-
+	vector2D impulse;
+	
+	float gravity;
+	bool is_static;
 };
 
 #endif // BASEENTITY_H

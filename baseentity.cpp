@@ -17,6 +17,7 @@ void BaseEntity::setOrigin( vector2D origin )
 void BaseEntity::setMass(float flMass)
 {
 	this->mass = flMass;
+	this->inv_mass = 1.f/flMass;
 }
 
 void BaseEntity::setVelocity(vector2D vecVelocity)
@@ -37,4 +38,18 @@ void BaseEntity::setAngleVelocity(float flAngleVelocity)
 void BaseEntity::setGravity(float flGravity)
 {
 	this->gravity = flGravity;
+}
+
+void BaseEntity::ApplyImpulse(vector2D vecImpulse)
+{
+	this->impulse = vecImpulse;
+	velocity += impulse * inv_mass;
+}
+
+void BaseEntity::setStatic( bool flag )
+{
+	if( flag == true )
+		this->inv_mass = 0.f;
+	else
+		this->inv_mass = 1.f/mass;
 }

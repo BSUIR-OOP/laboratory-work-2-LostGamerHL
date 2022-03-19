@@ -4,18 +4,26 @@
 #include "baseentity.h"
 #include "circle.h"
 #include "rectangle.h"
+#include <QQueue>
 
+
+struct EntityList;
 class Physics;
+
 typedef void (Physics::*PhysCallback)( BaseEntity *a, BaseEntity *b ); // Member function pointer
 
 #define CB(a) (PhysCallback)&Physics::a
 
-struct PhysicsContacts
+struct PhysicsContact
 {
-	PhysicsContacts( BaseEntity *a, BaseEntity *b )
+	PhysicsContact( BaseEntity *a, BaseEntity *b )
 	{
 		this->a = a; this->b = b;
+		penetration = 0.f;
 	}
+
+	float penetration;
+	vector2D normal;
 	BaseEntity *a, *b;
 };
 
@@ -34,14 +42,12 @@ public:
 	void CircleWithRectangle( Circle *body, Rectangle *body2 );
 	void RectangleWithCircle( Rectangle *body, Circle *body2 );
 	void RectangleWithRectangle( Rectangle *body, Rectangle *body2 ); // sus
+	void Process( EntityList *entitites );
 
-	void Process( BaseEntity *a, BaseEntity *b )
-	{
-		PhysCallback callback = PhysicsCallbacks[a->getShape()][b->getShape()];
-		(this->*callback)(a, b);
-	}
+	void Frame( void );
 	
 	PhysCallback PhysicsCallbacks[2][2];
+	QQueue<PhysicsContact*> contacts;
 };
 
 #endif // PHYSICS_H

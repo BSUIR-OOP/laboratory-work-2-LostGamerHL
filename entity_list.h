@@ -45,17 +45,17 @@ struct EntityList
 		return false;
 	}
 
-	void processPhysics()
+	void render( void )
 	{
-		for( int i = 0; i < entityCount; i++ )
-		{
-			for( int j = i+1; j < entityCount; j++ )
-			{
-				physicsController->Process( entities[i], entities[j] );
-			}
-		}
+		for( int i = 0; i < getCount(); i++)
+			entities[i]->render();
 	}
 	
+	void processPhysics()
+	{
+		physicsController->Process(this);
+	}
+
 	int entityCount;
 	int maxEntityNumber;
 	BaseEntity **entities;

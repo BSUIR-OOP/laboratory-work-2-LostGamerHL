@@ -33,25 +33,32 @@ private:
 
 void MainWindow::initialize()
 {
-	float aspect = float(width())/height();
 	glOrtho(0, width(), 0, height(), -1, 1);
-	
-	srand(123);
 
-	for( int i = 1; i < 12; i++ )
-	{
-		for( int j = 1; j < 7; j++ )
-		{
-			Circle *circ = new Circle(rand()%40+10);
-			circ->setMass(10);
-			circ->setGravity(0);
-			circ->setOrigin(vector2D(100*i, 100*j));
-			circ->setVelocity(vector2D((rand()%200-100)/40.f, (rand()%200-100)/40.f));
-		
-			entities.addEntity(circ);
-		}
-	}
 	
+	Rectangle *rect = new Rectangle(1080, 15);
+	rect->setOrigin(vector2D(100, 50));
+	rect->setStatic(true);
+	
+	Rectangle *rect2 = new Rectangle(15, 400);
+	rect2->setOrigin(vector2D(100, 80));
+	rect2->setStatic(true);
+
+	Rectangle *rect3 = new Rectangle(15, 400);
+	rect3->setOrigin(vector2D(1165, 80));	
+	rect3->setStatic(true);
+	
+	entities.addEntity(rect3);	
+	entities.addEntity(rect2);
+	entities.addEntity(rect);
+	
+	for( int i = 0; i < 100;i++ )
+	{
+		Circle *circle = new Circle(30);
+		circle->setOrigin(vector2D((i % 2 == 0) ? 200 : 230,300+100*i));
+		circle->setMass(0.02f);
+		entities.addEntity(circle);		
+	}
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *e)
@@ -64,19 +71,15 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
 
 void MainWindow::render()
 {
-    const qreal retinaScale = devicePixelRatio();
-    glViewport(0, 0, width() * retinaScale, height() * retinaScale);
-
-	glClearColor(1.f, 1.f, 1.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
+	const qreal retinaScale = devicePixelRatio();
 	
-	entities.processPhysics();
+	glViewport(0, 0, width()*retinaScale, height()*retinaScale);
+	
+	glClearColor(1.f, 1.f, 1.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
-	for( int i = 0; i < entities.getCount(); i++)
-	{
-		entities[i]->step();
-		entities[i]->render();
-	}
+	entities.processPhysics();	
+	entities.render();
 }
 
 int main(int argc, char **argv)
@@ -93,3 +96,4 @@ int main(int argc, char **argv)
 	
     return app.exec();
 }
+
