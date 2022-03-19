@@ -26,33 +26,34 @@ public:
 		angle = vector2D(0, 0);
 		acceleration = vector2D(0, 0);
 		normal = vector2D(0, 0);
-		angleVelocity = 0.f;
+		angularVelocity = 0.f;
 		is_static = false;
 	}
-	
+
 	virtual ~BaseEntity() {};
 
 	virtual void render() = 0;
 	virtual void step();
 
-	void setOrigin(vector2D vecOorigin);
-	void setMass(float flMass);
-	void setVelocity(vector2D vecVelocity);
-	void setGravity(float flGravity);
-	void ApplyImpulse( vector2D vecImpulse );
-	
-	void setAngle(float flAngle);
-	void setStatic( bool flag );
-	
-	virtual int getShape() { return SHAPE_NONE; }
+	void setOrigin(vector2D vecOorigin); // set entity position
+	void setMass(float flMass); // set entity mass
+	void setVelocity(vector2D vecVelocity); // set entity speed
+	void setGravity(float flGravity); // set entity mass
+	void ApplyImpulse( vector2D vecImpulse ); // apply impulse to entity
+	void setStatic( bool flag ); // Makes entity unmovable(static)
 
-	void setAngleVelocity(float flAngleVelocity);
+
+	void setAngle(float flAngle);
+
+	virtual int getShape() { return SHAPE_NONE; } // get physics shape
+
+	void setAngularVelocity(float flAngularVelocity);
 
 	vector2D origin, angle, velocity, acceleration, normal;
-	float inv_mass, mass, angleVelocity;
-	
+	float inv_mass, mass, angularVelocity;
+
 	vector2D impulse;
-	
+
 	float gravity;
 	bool is_static;
 };

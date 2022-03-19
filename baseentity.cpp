@@ -9,9 +9,9 @@ void BaseEntity::step()
 	origin += velocity;
 }
 
-void BaseEntity::setOrigin( vector2D origin )
+void BaseEntity::setOrigin( vector2D vecOrigin )
 {
-	this->origin = origin;
+	this->origin = vecOrigin;
 }
 
 void BaseEntity::setMass(float flMass)
@@ -27,12 +27,12 @@ void BaseEntity::setVelocity(vector2D vecVelocity)
 
 void BaseEntity::setAngle(float flAngle)
 {
-	this->angle = flAngle;	
+	this->angle = flAngle;
 }
 
-void BaseEntity::setAngleVelocity(float flAngleVelocity)
+void BaseEntity::setAngularVelocity(float flAngularVelocity)
 {
-	this->angleVelocity = flAngleVelocity;
+	this->angularVelocity = flAngularVelocity;
 }
 
 void BaseEntity::setGravity(float flGravity)
@@ -48,6 +48,7 @@ void BaseEntity::ApplyImpulse(vector2D vecImpulse)
 
 void BaseEntity::setStatic( bool flag )
 {
+	is_static = flag;
 	if( flag == true )
 		this->inv_mass = 0.f;
 	else
