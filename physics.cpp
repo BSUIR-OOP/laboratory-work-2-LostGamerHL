@@ -1,6 +1,6 @@
 #include "physics.h"
-#include <math.h>
 #include "entity_list.h"
+#include <math.h>
 
 void Physics::Process( EntityList *entities )
 {
@@ -84,7 +84,7 @@ bool isInAABB( vector2D point, AABB box )
 
 #define clamp( val, min, max ) ( ((val) > (max)) ? (max) : ( ((val) < (min)) ? (min) : (val) ) )
 
-void Physics::CircleWithRectangle( Circle *a, Rectangle *b )
+void Physics::CircleWithRectangle( Circle *a, RectAngle *b )
 {
 	AABB box = b->getAABB();
 	
@@ -106,12 +106,12 @@ void Physics::CircleWithRectangle( Circle *a, Rectangle *b )
 	}
 }
 
-void Physics::RectangleWithCircle( Rectangle *a, Circle *b )
+void Physics::RectangleWithCircle( RectAngle *a, Circle *b )
 {
 	CircleWithRectangle( b, a );
 }
 
-void Physics::RectangleWithRectangle( Rectangle *a, Rectangle *b )
+void Physics::RectangleWithRectangle( RectAngle *a, RectAngle *b )
 {
 
 }

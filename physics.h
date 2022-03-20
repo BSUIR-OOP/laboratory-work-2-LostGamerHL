@@ -2,10 +2,9 @@
 #define PHYSICS_H
 
 #include "baseentity.h"
+#include <QQueue>
 #include "circle.h"
 #include "rectangle.h"
-#include <QQueue>
-
 
 struct EntityList;
 class Physics;
@@ -33,15 +32,14 @@ public:
 	
 	Physics()
 	{
-		// Не самый лучший способ так заполнять таблицу, да
 		PhysicsCallbacks[0][0] = CB(CircleWithCircle); PhysicsCallbacks[0][1] = CB(CircleWithRectangle);
 		PhysicsCallbacks[1][0] = CB(RectangleWithCircle);  PhysicsCallbacks[1][1] = CB(CircleWithRectangle);
 	}
 	
 	void CircleWithCircle( Circle *body, Circle *body2 );
-	void CircleWithRectangle( Circle *body, Rectangle *body2 );
-	void RectangleWithCircle( Rectangle *body, Circle *body2 );
-	void RectangleWithRectangle( Rectangle *body, Rectangle *body2 ); // sus
+	void CircleWithRectangle( Circle *body, RectAngle *body2 );
+	void RectangleWithCircle( RectAngle *body, Circle *body2 );
+	void RectangleWithRectangle( RectAngle *body, RectAngle *body2 ); // sus
 	void Process( EntityList *entitites );
 
 	void Frame( void );

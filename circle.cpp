@@ -1,10 +1,8 @@
 #include "circle.h"
-#include <GL/gl.h>
-#include <GLES3/gl32.h>
-#include <QDragLeaveEvent>
-#include "entity_list.h"
 #include <math.h>
 #include "baseentity.h"
+#include <QOpenGLContext>
+#include <QOpenGLFunctions_2_1>
 
 #define N_TRIANGLES 15
 
@@ -15,6 +13,8 @@ Circle::Circle( float radius ) : BaseEntity()
 
 void Circle::render()
 {
+	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
+	
 	float verts[6*N_TRIANGLES];	
 	
 	for(int i = 0; i < N_TRIANGLES; i++)
@@ -30,11 +30,11 @@ void Circle::render()
 		verts[i*6+5] = 1;
 	}
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 6*4, verts);
-	glColorPointer(4, GL_FLOAT, 6*4, &verts[2]);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, N_TRIANGLES);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	qGL->glEnableClientState(GL_VERTEX_ARRAY);
+	qGL->glEnableClientState(GL_COLOR_ARRAY);
+	qGL->glVertexPointer(2, GL_FLOAT, 6*4, verts);
+	qGL->glColorPointer(4, GL_FLOAT, 6*4, &verts[2]);
+	qGL->glDrawArrays(GL_TRIANGLE_FAN, 0, N_TRIANGLES);
+	qGL->glDisableClientState(GL_VERTEX_ARRAY);
+	qGL->glDisableClientState(GL_COLOR_ARRAY);
 }

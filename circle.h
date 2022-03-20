@@ -2,7 +2,6 @@
 #define CCIRCLE_H
 
 #include "baseentity.h"
-#include "vector.h"
 
 class Circle : public BaseEntity
 {

@@ -8,10 +8,10 @@ struct AABB
 	vector2D min, max;
 };
 
-class Rectangle : public BaseEntity
+class RectAngle : public BaseEntity
 {
 public:
-	Rectangle( float flSizeX, float flSizeY );
+	RectAngle( float flSizeX, float flSizeY );
 	void render();
 
 	int getShape() { return SHAPE_RECTANGLE; }	

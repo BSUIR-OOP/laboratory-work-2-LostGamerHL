@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QOpenGLShaderProgram>
+#include <QOpenGLFunctions_2_1>
 #include <QScreen>
 #include <QOpenGLWindow>
 #include "glwindow.h"
@@ -36,17 +37,18 @@ private:
 
 void MainWindow::initialize()
 {
-	glOrtho(0, width(), 0, height(), -1, 1);
+	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
+	qGL->glOrtho(0, width(), 0, height(), -1, 1);
 
-	Rectangle *rect = new Rectangle(1080, 15);
+	RectAngle *rect = new RectAngle(1080, 15);
 	rect->setOrigin(vector2D(100, 50));
 	rect->setStatic(true);
 
-	Rectangle *rect2 = new Rectangle(15, 400);
+	RectAngle *rect2 = new RectAngle(15, 400);
 	rect2->setOrigin(vector2D(100, 80));
 	rect2->setStatic(true);
 
-	Rectangle *rect3 = new Rectangle(15, 400);
+	RectAngle *rect3 = new RectAngle(15, 400);
 	rect3->setOrigin(vector2D(1165, 80));	
 	rect3->setStatic(true);
 
@@ -73,12 +75,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
 
 void MainWindow::render()
 {
+	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
+
 	const qreal retinaScale = devicePixelRatio();
 
-	glViewport(0, 0, width()*retinaScale, height()*retinaScale);
+	qGL->glViewport(0, 0, width()*retinaScale, height()*retinaScale);
 
-	glClearColor(1.f, 1.f, 1.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	qGL->glClearColor(1.f, 1.f, 1.f, 1.f);
+	qGL->glClear(GL_COLOR_BUFFER_BIT);
 
 	entities.processPhysics(); // Process movement and collisions
 	entities.render(); // Draw entities

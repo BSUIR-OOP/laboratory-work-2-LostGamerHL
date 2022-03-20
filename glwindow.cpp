@@ -1,6 +1,5 @@
 #include "glwindow.h"
 #include <QPainter>
-#include "entity_list.h"
 
 OpenGLWindow::OpenGLWindow(QWindow *parent)
     : QWindow(parent)

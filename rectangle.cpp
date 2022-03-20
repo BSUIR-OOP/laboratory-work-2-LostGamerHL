@@ -1,19 +1,18 @@
 #include "rectangle.h"
-#include <GL/gl.h>
-#include <GLES3/gl32.h>
-#include <QDragLeaveEvent>
-#include "entity_list.h"
-#include <math.h>
+#include <QOpenGLContext>
 #include "baseentity.h"
+#include <QOpenGLFunctions_2_1>
 
-Rectangle::Rectangle(  float flSizeX, float flSizeY  ) : BaseEntity()
+RectAngle::RectAngle(  float flSizeX, float flSizeY  ) : BaseEntity()
 {
 	m_flSizeX = flSizeX;
 	m_flSizeY = flSizeY;
 }
 
-void Rectangle::render()
+void RectAngle::render()
 {
+	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
+	
 	vector2D vecReal1 = origin;
 	vector2D vecReal2 = vector2D( m_flSizeX + origin.x, m_flSizeY + origin.y );
 	
@@ -24,11 +23,11 @@ void Rectangle::render()
 		vecReal2.x, vecReal1.y
 	};
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 0, verts);
-	glColorPointer(2, GL_FLOAT, 0, verts);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
+	qGL->glEnableClientState(GL_VERTEX_ARRAY);
+	qGL->glEnableClientState(GL_COLOR_ARRAY);
+	qGL->glVertexPointer(2, GL_FLOAT, 0, verts);
+	qGL->glColorPointer(2, GL_FLOAT, 0, verts);
+	qGL->glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	qGL->glDisableClientState(GL_VERTEX_ARRAY);
+	qGL->glDisableClientState(GL_COLOR_ARRAY);
 }
