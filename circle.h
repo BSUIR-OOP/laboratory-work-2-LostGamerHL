@@ -10,7 +10,6 @@ public:
 	
 	void render();
 	void collide();
-	int getShape() { return SHAPE_CIRCLE; }
 	
 	float radius;
 };

@@ -2,7 +2,6 @@
 #define ENTITY_LIST_H
 
 #include "baseentity.h"
-#include "physics.h"
 #include <malloc.h>
 
 struct EntityList
@@ -13,15 +12,14 @@ struct EntityList
 		entityCount = 0;
 		if( maxEntityNumber > 0 )
 			entities = new BaseEntity*[iMaxEntityNumber];
-		physicsController = new Physics;
 	}
 	
 	~EntityList()
 	{
 		if( maxEntityNumber > 0 )
 			delete entities;
-		if( physicsController )
-			delete physicsController;
+//		if( physicsController )
+//			delete physicsController;
 	}
 	
 	int getCount() { return entityCount; }
@@ -52,14 +50,12 @@ struct EntityList
 	
 	void processPhysics()
 	{
-		physicsController->Process(this);
+		//physicsController->Process(this);
 	}
 
 	int entityCount;
 	int maxEntityNumber;
 	BaseEntity **entities;
-	
-	Physics *physicsController;
 };
 
 #endif // ENTITY_LIST_H

@@ -42,15 +42,12 @@ void MainWindow::initialize()
 
 	RectAngle *rect = new RectAngle(1080, 15);
 	rect->setOrigin(vector2D(100, 50));
-	rect->setStatic(true);
 
 	RectAngle *rect2 = new RectAngle(15, 400);
 	rect2->setOrigin(vector2D(100, 80));
-	rect2->setStatic(true);
 
 	RectAngle *rect3 = new RectAngle(15, 400);
 	rect3->setOrigin(vector2D(1165, 80));	
-	rect3->setStatic(true);
 
 	entities.addEntity(rect3);
 	entities.addEntity(rect2);
@@ -60,7 +57,6 @@ void MainWindow::initialize()
 	{
 		Circle *circle = new Circle(30);
 		circle->setOrigin(vector2D((i % 2 == 0) ? 200 : 230,300+100*i));
-		circle->setMass(0.02f);
 		entities.addEntity(circle);
 	}
 }
@@ -84,7 +80,6 @@ void MainWindow::render()
 	qGL->glClearColor(1.f, 1.f, 1.f, 1.f);
 	qGL->glClear(GL_COLOR_BUFFER_BIT);
 
-	entities.processPhysics(); // Process movement and collisions
 	entities.render(); // Draw entities
 }
 
