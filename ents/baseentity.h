@@ -1,7 +1,7 @@
 #ifndef BASEENTITY_H
 #define BASEENTITY_H
 
-#include "vector.h"
+#include "math/vector.h"
 #include <stdio.h>
 
 #define SHAPE_COUNT 2

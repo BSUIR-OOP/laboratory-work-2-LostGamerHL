@@ -1,7 +1,7 @@
 #ifndef ENTITY_LIST_H
 #define ENTITY_LIST_H
 
-#include "baseentity.h"
+#include "ents/baseentity.h"
 #include <malloc.h>
 
 struct EntityList
