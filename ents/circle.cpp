@@ -4,19 +4,16 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions_2_1>
 
-#define N_TRIANGLES 15
-
 Circle::Circle( float radius ) : BaseEntity()
 {
 	this->radius = radius;
+	renderInfo.count = N_TRIANGLES;
+	renderInfo.stride = 24;
+	renderInfo.vertBase = verts;	
 }
 
-void Circle::render()
+void Circle::updateVerts()
 {
-	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
-	
-	float verts[6*N_TRIANGLES];	
-	
 	for(int i = 0; i < N_TRIANGLES; i++)
 	{
 		float t = float(i)/N_TRIANGLES*2*M_PI;
@@ -29,12 +26,4 @@ void Circle::render()
 		verts[i*6+4] = cos(t+4)*0.5f+0.5f;
 		verts[i*6+5] = 1;
 	}
-
-	qGL->glEnableClientState(GL_VERTEX_ARRAY);
-	qGL->glEnableClientState(GL_COLOR_ARRAY);
-	qGL->glVertexPointer(2, GL_FLOAT, 6*4, verts);
-	qGL->glColorPointer(4, GL_FLOAT, 6*4, &verts[2]);
-	qGL->glDrawArrays(GL_TRIANGLE_FAN, 0, N_TRIANGLES);
-	qGL->glDisableClientState(GL_VERTEX_ARRAY);
-	qGL->glDisableClientState(GL_COLOR_ARRAY);
 }

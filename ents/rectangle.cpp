@@ -7,27 +7,19 @@ RectAngle::RectAngle(  float flSizeX, float flSizeY  ) : BaseEntity()
 {
 	m_flSizeX = flSizeX;
 	m_flSizeY = flSizeY;
+	
+	renderInfo.count = 4;
+	renderInfo.stride = 0;
+	renderInfo.vertBase = verts;	
 }
 
-void RectAngle::render()
+void RectAngle::updateVerts()
 {
-	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
-	
 	vector2D vecReal1 = origin;
 	vector2D vecReal2 = vector2D( m_flSizeX + origin.x, m_flSizeY + origin.y );
-	
-	float verts[] = {
-		vecReal1.x, vecReal1.y,
-		vecReal1.x, vecReal2.y,
-		vecReal2.x, vecReal2.y,
-		vecReal2.x, vecReal1.y
-	};
 
-	qGL->glEnableClientState(GL_VERTEX_ARRAY);
-	qGL->glEnableClientState(GL_COLOR_ARRAY);
-	qGL->glVertexPointer(2, GL_FLOAT, 0, verts);
-	qGL->glColorPointer(2, GL_FLOAT, 0, verts);
-	qGL->glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	qGL->glDisableClientState(GL_VERTEX_ARRAY);
-	qGL->glDisableClientState(GL_COLOR_ARRAY);
+	verts[0] = vecReal1.x; verts[1] = vecReal1.y;
+	verts[2] = vecReal1.x; verts[3] = vecReal2.y;
+	verts[4] = vecReal2.x; verts[5] = vecReal2.y;
+	verts[6] = vecReal2.x; verts[7] = vecReal1.y;
 }

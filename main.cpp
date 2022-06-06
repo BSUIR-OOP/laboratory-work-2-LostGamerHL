@@ -78,7 +78,7 @@ void MainWindow::render()
 
 	qGL->glViewport(0, 0, width()*retinaScale, height()*retinaScale);
 
-	qGL->glClearColor(1.f, 1.f, 1.f, 1.f);
+	qGL->glClearColor(0.f, 0.f, 0.f, 1.f);
 	qGL->glClear(GL_COLOR_BUFFER_BIT);
 
 	entities.render(); // Draw entities

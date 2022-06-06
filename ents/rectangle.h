@@ -7,9 +7,11 @@ class RectAngle : public BaseEntity
 {
 public:
 	RectAngle( float flSizeX, float flSizeY );
-	void render();
+	void updateVerts();	
 
 	int m_flSizeX,m_flSizeY;
+
+	float verts[8];
 };
 
 #endif // RECTANGLE_H

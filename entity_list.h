@@ -3,6 +3,8 @@
 
 #include "ents/baseentity.h"
 #include <malloc.h>
+#include <QOpenGLContext>
+#include <QOpenGLFunctions_2_1>
 
 struct EntityList
 {
@@ -45,7 +47,15 @@ struct EntityList
 	void render( void )
 	{
 		for( int i = 0; i < getCount(); i++)
-			entities[i]->render();
+		{
+			RenderInfo *inf = &entities[i]->renderInfo;
+			QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
+		
+			qGL->glEnableClientState(GL_VERTEX_ARRAY);
+			qGL->glVertexPointer(2, GL_FLOAT, inf->stride, inf->vertBase);
+			qGL->glDrawArrays(GL_TRIANGLE_FAN, 0, inf->count);
+			qGL->glDisableClientState(GL_VERTEX_ARRAY);
+		}
 	}
 	
 	void processPhysics()

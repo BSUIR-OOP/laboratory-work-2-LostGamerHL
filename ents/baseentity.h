@@ -4,25 +4,35 @@
 #include "math/vector.h"
 #include <stdio.h>
 
-#define SHAPE_COUNT 2
+
+struct RenderInfo
+{
+	float *vertBase;
+	int stride;
+	int count;
+};
 
 class BaseEntity
 {
 public:
 	BaseEntity() {
 		origin = vector2D(0, 0);
+		renderInfo.vertBase = NULL;
+		renderInfo.count = 0;
+		renderInfo.stride = 0;
 	}
 
 	virtual ~BaseEntity() {};
-
-	virtual void render() = 0;
+	virtual void updateVerts() = 0;
 
 	// set entity position
 	void setOrigin(vector2D vecOrigin)
 	{
 		this->origin = vecOrigin;
+		updateVerts();
 	}
 	
+	RenderInfo renderInfo;
 	vector2D origin;
 };
 
