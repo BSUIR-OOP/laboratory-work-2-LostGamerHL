@@ -6,6 +6,7 @@
 
 Circle::Circle( float radius ) : BaseEntity()
 {
+	printf("Hello, i am circle!\n");
 	this->radius = radius;
 	renderInfo.count = N_TRIANGLES;
 	renderInfo.stride = 24;
@@ -17,7 +18,7 @@ void Circle::updateVerts()
 	for(int i = 0; i < N_TRIANGLES; i++)
 	{
 		float t = float(i)/N_TRIANGLES*2*M_PI;
-	
+
 		verts[i*6] = sin(t)*radius+origin.x;
 		verts[i*6+1] = cos(t)*radius+origin.y;
 

@@ -2,6 +2,7 @@ TEMPLATE = app
 QT += core gui network sql opengl
 
 SOURCES += \
+        factory.h \
         ents/circle.cpp \
         ents/rectangle.cpp \
         glwindow.cpp \

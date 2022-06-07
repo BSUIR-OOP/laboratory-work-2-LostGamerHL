@@ -12,6 +12,7 @@
 #include "ents/rectangle.h"
 #include "entity_list.h"
 #include "glwindow.h"
+#include "factory.h"
 
 class MainWindow : public OpenGLWindow
 {
@@ -29,6 +30,7 @@ private:
 	GLint m_matrixUniform = 0;
 
 	QOpenGLShaderProgram *m_program = nullptr;
+	ObjectFactory<BaseEntity> factory;
 	int m_frame = 0;
 };
 
@@ -38,6 +40,8 @@ private:
 
 void MainWindow::initialize()
 {
+	factory.add<Circle>("circle");
+
 	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
 	qGL->glOrtho(0, width(), 0, height(), -1, 1);
 
