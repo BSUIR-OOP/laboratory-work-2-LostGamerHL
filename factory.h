@@ -16,7 +16,6 @@ private:
 	AbstractCreator& operator = (const AbstractCreator&);
 };
 
-
 template <class C, class Base>
 class Creator : public AbstractCreator<Base>
 {
@@ -63,6 +62,11 @@ public:
 			delete it->second;
 			_map.erase(it);
 		}
+	}
+	
+	QList<QString> keys()
+	{
+		return _map.keys();		
 	}
 
 	size_t size() const

@@ -20,8 +20,6 @@ struct EntityList
 	{
 		if( maxEntityNumber > 0 )
 			delete entities;
-//		if( physicsController )
-//			delete physicsController;
 	}
 	
 	int getCount() { return entityCount; }
@@ -56,11 +54,6 @@ struct EntityList
 			qGL->glDrawArrays(GL_TRIANGLE_FAN, 0, inf->count);
 			qGL->glDisableClientState(GL_VERTEX_ARRAY);
 		}
-	}
-	
-	void processPhysics()
-	{
-		//physicsController->Process(this);
 	}
 
 	int entityCount;

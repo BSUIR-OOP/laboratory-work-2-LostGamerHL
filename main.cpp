@@ -14,6 +14,8 @@
 #include "glwindow.h"
 #include "factory.h"
 
+#define MAX_POINTS 256
+
 class MainWindow : public OpenGLWindow
 {
 public:
@@ -21,8 +23,9 @@ public:
 
 	void initialize() override;
 	void render() override;
-	void mouseMoveEvent(QMouseEvent *e);
-
+	void mousePressEvent(QMouseEvent *e) override;
+	void keyPressEvent(QKeyEvent *e) override;
+	
 	EntityList entities; // Create entity list
 private:
 	GLint m_posAttr = 0;
@@ -32,6 +35,11 @@ private:
 	QOpenGLShaderProgram *m_program = nullptr;
 	ObjectFactory<BaseEntity> factory;
 	int m_frame = 0;
+	
+	
+	vector2D points[MAX_POINTS];
+	int point_count = 0;
+	QString selected_object;
 };
 
 
@@ -41,47 +49,48 @@ private:
 void MainWindow::initialize()
 {
 	factory.add<Circle>("circle");
+	factory.add<RectAngle>("rectangle");
+	selected_object = factory.keys()[0];
 
 	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
 	qGL->glOrtho(0, width(), 0, height(), -1, 1);
+}
 
-	RectAngle *rect = new RectAngle(1080, 15);
-	rect->setOrigin(vector2D(100, 50));
-
-	RectAngle *rect2 = new RectAngle(15, 400);
-	rect2->setOrigin(vector2D(100, 80));
-
-	RectAngle *rect3 = new RectAngle(15, 400);
-	rect3->setOrigin(vector2D(1165, 80));	
-
-	entities.addEntity(rect3);
-	entities.addEntity(rect2);
-	entities.addEntity(rect);
-
-	for( int i = 0; i < 100;i++ )
+void MainWindow::mousePressEvent(QMouseEvent *e)
+{
+	points[point_count].x = e->x();
+	points[point_count].y = height()-e->y();
+	point_count++;
+	
+	if( point_count == 2 )
 	{
-		Circle *circle = new Circle(30);
-		circle->setOrigin(vector2D((i % 2 == 0) ? 200 : 230,300+100*i));
-		entities.addEntity(circle);
+		BaseEntity *ent = factory.create(selected_object);
+		ent->updateDrawInfo(points);
+		entities.addEntity(ent);
+		point_count = 0;
 	}
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent *e)
+void MainWindow::keyPressEvent(QKeyEvent *e)
 {
-	if(e->button() == Qt::LeftButton)
+	if( e->text() >= '1' && e->text() <= '9' )
 	{
-		qDebug() << "Right mouse click!" << endl;
+		int i = e->text().toInt();
+		if( i <= factory.keys().length() )
+		{
+			QList<QString> list = factory.keys();
+			selected_object = list[i-1];
+			qDebug() << "selected - " << selected_object;
+		}
 	}
 }
 
 void MainWindow::render()
 {
 	QOpenGLFunctions_2_1 *qGL = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_1>();
-
 	const qreal retinaScale = devicePixelRatio();
 
 	qGL->glViewport(0, 0, width()*retinaScale, height()*retinaScale);
-
 	qGL->glClearColor(0.f, 0.f, 0.f, 1.f);
 	qGL->glClear(GL_COLOR_BUFFER_BIT);
 

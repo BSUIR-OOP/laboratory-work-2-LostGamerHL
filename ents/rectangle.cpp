@@ -13,6 +13,15 @@ RectAngle::RectAngle(  float flSizeX, float flSizeY  ) : BaseEntity()
 	renderInfo.vertBase = verts;	
 }
 
+void RectAngle::updateDrawInfo( vector2D *points )
+{
+	setOrigin(points[0]);
+	m_flSizeX = points[1].x - points[0].x;
+	m_flSizeY = points[1].y - points[0].y;
+	updateVerts();
+}
+
+
 void RectAngle::updateVerts()
 {
 	vector2D vecReal1 = origin;

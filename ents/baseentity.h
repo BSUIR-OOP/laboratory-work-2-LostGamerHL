@@ -24,6 +24,7 @@ public:
 
 	virtual ~BaseEntity() {};
 	virtual void updateVerts() = 0;
+	virtual void updateDrawInfo( vector2D *points ) = 0;
 
 	// set entity position
 	void setOrigin(vector2D vecOrigin)

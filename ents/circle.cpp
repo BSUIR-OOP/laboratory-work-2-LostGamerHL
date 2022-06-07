@@ -6,11 +6,17 @@
 
 Circle::Circle( float radius ) : BaseEntity()
 {
-	printf("Hello, i am circle!\n");
 	this->radius = radius;
 	renderInfo.count = N_TRIANGLES;
 	renderInfo.stride = 24;
 	renderInfo.vertBase = verts;	
+}
+
+void Circle::updateDrawInfo( vector2D *points )
+{
+	radius = points[1].dist(points[0])/2.f;
+	setOrigin( points[0] );
+	updateVerts();
 }
 
 void Circle::updateVerts()

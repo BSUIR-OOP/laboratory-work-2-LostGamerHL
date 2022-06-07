@@ -6,8 +6,9 @@
 class RectAngle : public BaseEntity
 {
 public:
-	RectAngle( float flSizeX, float flSizeY );
+	RectAngle( float flSizeX = 0.f, float flSizeY = 0.f );
 	void updateVerts();	
+	void updateDrawInfo( vector2D *points );
 
 	int m_flSizeX,m_flSizeY;
 
